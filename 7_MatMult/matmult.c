@@ -1,8 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #include <mpi.h>
 
 void printMat(int R, int C, double *A) {
+  printf("%d x %d\n", R, C);
+  return;
   int i,j;
   for (i = 0; i < R; i++) {
     for (j = 0; j < C; j++) {
@@ -13,15 +16,19 @@ void printMat(int R, int C, double *A) {
 }
 
 int main(int argc, char *argv[]) {
-  int N = 8;
+  int N = 8000;
   int i,j,k;
   int my_rank;
   int nprocs;
+  time_t start, end;
 
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
+  if( my_rank == 0 ) {
+    start = time(NULL);
+  }
   int local_nrows = N / nprocs;
   if (N % nprocs != 0) {
     printf("Matrix size is not divisible by the number of processes\n");
@@ -97,6 +104,10 @@ int main(int argc, char *argv[]) {
   free(localC);
   free(localB);
   free(localA);
+  if( my_rank == 0 ) {
+    end = time(NULL);
+    printf("Total procs = %d, Total seconds = %ld \n", nprocs, end-start);
+  }
   MPI_Finalize();
 }
 

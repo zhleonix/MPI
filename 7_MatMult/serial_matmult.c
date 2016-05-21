@@ -14,6 +14,7 @@ void matMult(int Arows, int Acols, int Bcols, double *A, double *B, double *C) {
 }
 
 void printMat(int NR, int NC, double *A) {
+  return;
   int i,j;
   for (i = 0; i < NR; i++) {
     for (j = 0; j < NC; j++) {
@@ -24,9 +25,9 @@ void printMat(int NR, int NC, double *A) {
 }
 
 int main(int argc, char *argv[]) {
-  int NRA = 8;
-  int NCA = 8;
-  int NCB = 8;
+  int NRA = 8000;
+  int NCA = 8000;
+  int NCB = 8000;
   int NRB = NCA;
   int i,j;
 
